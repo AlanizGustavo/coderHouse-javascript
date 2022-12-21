@@ -1,0 +1,11 @@
+@mixin prop-flex($verticalAlign, $horizontalAlign) {
+    display: flex;
+    justify-content: $horizontalAlign;
+    align-items: $verticalAlign;
+}
+
+@mixin reset{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}

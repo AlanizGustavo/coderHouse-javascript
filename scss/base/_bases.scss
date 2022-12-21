@@ -1,0 +1,57 @@
+*{
+    @include reset;
+}
+
+html{
+    background-color: $colorFondo;
+    font-size: 62.5%;
+}
+
+body{
+    background-color: $colorFondo;
+    line-height: normal;
+}
+
+h3{
+    font-size: 2.5rem;
+    font-family: $fuenteH3;
+}
+
+h4{
+    font-size: 2rem;
+}
+
+a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.contenedorMain{
+    text-align: justify;
+    width: 100%;
+    padding: 0rem 15%;
+}
+
+main{
+    h3{
+        text-align: left; 
+    } 
+    .titulo{
+        margin-top: 18rem;
+        margin-bottom: 8rem;
+    }
+}
+
+
+.subtitulo{
+    text-align: center;
+    font-family: $fuenteSlogan;
+    font-weight: 100;
+    margin-bottom: 6rem;
+    margin-top: 8rem;
+}
+
+.texto{
+    font-family: $fuenteTexto;
+    font-size: 2rem;
+}

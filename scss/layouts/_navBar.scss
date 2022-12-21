@@ -1,0 +1,35 @@
+.logo{
+    min-width: 200px;
+    height: auto;
+    width: 18vw;
+}
+
+nav{
+    @include prop-flex(center,space-between);
+    ul{
+        @include prop-flex(center,none);
+        margin: 0rem 6rem;
+        li{
+            @extend .botonBanner;
+            margin-right: 2rem;
+            &:hover{
+                background-color: #14ca4e00;
+                a{
+                    color: $colorFondo;
+                    svg{
+                        fill: $colorFondo;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.navBar{
+    @include prop-flex(center,flex-end);
+}
+
+.animacion:hover{
+    animation: sacudir 0.5s; 
+}
+
