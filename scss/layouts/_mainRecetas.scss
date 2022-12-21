@@ -1,0 +1,41 @@
+article{
+    margin-bottom: 4rem;
+    font-size: 2rem;
+    li{
+        text-align: left;
+    }
+}
+.articleRecetas{
+    align-items: center;
+    justify-content: center;
+    min-height: 450px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px 5px #000000;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    width: 100%;
+    img{
+        float:left;
+    }
+}
+.articleRecetasInvertida{
+    border-radius: 15px;
+    min-height: 500px;
+    box-shadow: inset 0px 0px 20px 5px rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    width: 100%;
+    img{
+        float:right;
+    }
+}
+
+.anclaTexto{
+    color: $colorPrincipal;
+    &:hover{
+        color: $colorPrincipal;
+    }
+}

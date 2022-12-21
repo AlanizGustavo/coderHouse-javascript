@@ -1,0 +1,33 @@
+.videoCarousel{
+    @include prop-flex(none,center);
+    flex-wrap: wrap;
+    .video{
+        margin: 4rem;
+        border-radius: 20px;
+        width: 30rem;
+    }
+}
+
+#dondeEstamos{
+    width: 100%;
+    height: auto;
+    margin-bottom: 10rem;
+    .dondeEstamos{
+        display: flex;
+        flex-wrap: wrap;
+        h2{
+            margin-bottom: 10rem;
+        }
+    }
+    .mapa{
+        height: 50rem;
+        margin-right: 30px;
+        border-radius: 20px;
+    }
+    .info{
+        line-height: 3rem;
+    }
+}
+
+
+

@@ -1,0 +1,21 @@
+/*Boton Whatsapp flotante*/
+
+.btn-suspendido{
+    align-items: center;
+    background-color: $colorWhatsapp;
+    border-radius: 50px;
+    bottom: 3rem;
+    box-shadow: 0px 0px 40px 5px #000000;
+    display: flex;
+    height: 8rem;
+    justify-content: center;
+    position: fixed;
+    right: 3rem;
+    width: 8rem;
+    &:hover{
+        background-color: $colorIconoWhatsappPrincipal;
+        svg{
+            fill: $colorWhatsapp;
+        }
+    }
+}

@@ -1,0 +1,17 @@
+footer{
+    @include prop-flex(center,space-evenly);
+    background-color: $colorPrincipal;
+    flex-wrap: wrap;
+    height: auto;
+    margin-top: 8rem;
+    padding: 3rem;
+    width: 100%;
+    .contactanos{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    .copyright{
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
