@@ -275,7 +275,7 @@ const cargarFormulario = () => {
     const formulario = document.createElement("div");
     formulario.classList.add("formulario");
     formulario.innerHTML = `
-        <p class="texto">EL TOTAL ES DE: </p>
+        <p class="texto">EL TOTAL ES DE: $${calcularTotal()}</p>
         <input type="text" placeholder="Nombre y Apellido" name="nombreApellido" id="nombreApellido" class="inputNombre">
         <div>
             <label for="domicilio">¿Es a domicilio?</label>
@@ -299,3 +299,13 @@ comprar.addEventListener('click', () => {
         `;
     listaAgregados.appendChild(comprado);
 })
+
+
+const calcularTotal = () => {
+    let acum = 0;
+    let actual;
+    for (const producto of carrito) {
+        acum += producto.precio
+    }
+    return acum
+}
