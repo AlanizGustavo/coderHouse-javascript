@@ -186,6 +186,8 @@ const modalCerrar = document.querySelector('#cerrarModal')
 const listaAgregados = document.querySelector('.productosAgregados');
 const formulario = document.querySelector('.formulario');
 const comprar = document.querySelector('#comprar')
+let inputRadio;
+let radioSi;
 
 const hoy = new Date;
 
@@ -211,12 +213,30 @@ modalAbrir.addEventListener('click', () => {
         botonesEliminarAll = document.querySelectorAll('.eliminar');
         agregarEventoEliminar();
         cargarFormulario();
+        cargaEventoInput();
     }
     else{
         
         sinProductos();
     }
 })
+
+const cargaEventoInput = () => {
+    radioBtns = document.querySelectorAll("input[name='domicilio']")
+    inputDomicilio = document.querySelector('.inputDomicilio');
+    radioBtns.forEach( radio => {
+        radio.addEventListener('change', () => {
+            let seleccionado = document.querySelector("input[name='domicilio']:checked")
+            let valor=seleccionado.value;
+            if(valor==="Si"){
+                inputDomicilio.classList.toggle('show')
+            }
+            else{
+                inputDomicilio.classList.toggle('show')
+            }
+        })
+    })
+}
 
 modalCerrar.addEventListener('click', () => {
     popup.close();
@@ -261,6 +281,7 @@ const agregarEventoEliminar = () => {
                 botonesEliminarAll = document.querySelectorAll('.eliminar');
                 agregarEventoEliminar();
                 cargarFormulario();
+                cargaEventoInput();
             }
             else{
                 sinProductos();
@@ -276,17 +297,22 @@ const cargarFormulario = () => {
     formulario.classList.add("formulario");
     formulario.innerHTML = `
         <p class="texto">EL TOTAL ES DE: $${calcularTotal()}</p>
-        <input type="text" placeholder="Nombre y Apellido" name="nombreApellido" id="nombreApellido" class="inputNombre">
-        <div>
-            <label for="domicilio">¿Es a domicilio?</label>
-            <label for="domicilioSi">Si</label>
-            <input type="radio" placeholder="Si" name="domicilio" id="domicilioSi" class="radioSi" value="Si">
-            <label for="domicilioNo">No</label>
-            <input type="radio" placeholder="No" name="domicilio" id="domicilioNo" class="radioNo" value="No">
-        </div>
-        <input type="text" placeholder="Domicilio" name="domicilio" id="domicilio" class="inputDomicilio">
-        <label for="fecha">Fecha de Entrega:</label>
-        <input type="date" placeholder="Fecha de Entrega" name="fecha" id="fecha" class="fecha" min="${hoy}">
+        <form>
+            <input type="text" placeholder="Nombre y Apellido" name="nombreApellido" id="nombreApellido" class="inputNombre" required="required">
+            <div class="inputRadio">
+                <label for="domicilio">¿Es a domicilio?</label>
+                <label for="domicilioSi">Si
+                    <input type="radio" placeholder="Si" name="domicilio" id="domicilioSi" class="radioSi" value="Si" required="required">
+                </label>
+                <label for="domicilioNo">No
+                    <input type="radio" placeholder="No" name="domicilio" id="domicilioNo" class="radioNo" value="No" required="required">
+                </label>    
+            </div>
+            <input type="text" placeholder="Domicilio" name="inputDomicilio" id="inputDomicilio" class="inputDomicilio" required="required">
+            <label for="fecha">Fecha de Entrega:</label>
+            <input type="date" placeholder="Fecha de Entrega" name="fecha" id="fecha" class="fecha" min="${hoy}" required="required">
+            <button type="submit">enviar</button>
+        </form>
         `;
     listaAgregados.appendChild(formulario);
 }
