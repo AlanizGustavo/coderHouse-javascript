@@ -1,4 +1,4 @@
-form{
+form, .formulario{
     margin-top: 8rem;
     font-size: 2rem;
     margin-bottom: 8rem;
@@ -32,7 +32,7 @@ form{
     }
     .submit{
         margin: 0;
-        background-color: #bda075;
+        background-color: $colorBtnSecundario;
     }
     
     .centrarBoton{

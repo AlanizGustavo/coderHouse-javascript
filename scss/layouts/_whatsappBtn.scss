@@ -12,6 +12,7 @@
     position: fixed;
     right: 3rem;
     width: 8rem;
+    z-index: 2;
     &:hover{
         background-color: $colorIconoWhatsappPrincipal;
         svg{

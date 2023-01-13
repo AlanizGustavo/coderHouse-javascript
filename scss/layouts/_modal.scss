@@ -1,0 +1,86 @@
+#modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    width: 80vw;
+    background-color: $colorFondo;
+    border-width: thin;
+    &::backdrop{
+        background-color: rgba(0,0,0,.55);
+    }
+    .tituloModal{
+        font-family: $fuenteTitulo;
+        font-size: 6rem;
+        text-align: center;
+        background-color: $colorPrincipal;
+        border-bottom-style: solid;
+        border-width: thin;
+        box-shadow: 0px 5px 30px #000000;
+        margin-bottom: 4rem;
+    }
+    .productosAgregados{
+        padding: 3rem;
+        min-height: 20rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .texto{
+            text-align: center;
+        }
+        .formulario{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .fila{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem;
+        p{
+            flex: 2;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        .precio{
+            font-size: 2rem;
+            text-align: center;
+            flex: 1;
+        }
+        .eliminar{
+            flex: 1;
+            background-color: red;
+            border-radius: 50px;
+            height: 5rem;
+            font-size: 1.3rem;
+            padding: 0 1rem;
+            font-family: $fuenteTexto;
+            margin-left: 2rem;
+            &:hover{
+                box-shadow: 0px 0px 15px 0px;
+            }
+        }
+    }
+    .botonesModal{
+        display: flex;
+        justify-content: center;
+        position: relative;
+        bottom: 2rem;
+        margin: 3rem 0px 2rem 0px;
+        .btnModal{
+            margin-right: 2rem;
+            background-color: $colorBtnSecundario;
+            border-radius: 50px;
+            height: 5rem;
+            font-size: 3em;
+            font-family: $fuenteBotones;
+            padding: 0 2rem;
+            &:hover{
+                box-shadow: 0px 0px 15px 0px;
+            }
+        }
+    }
+}
+

@@ -59,7 +59,7 @@ header {
   padding-left: 6.5rem;
   top: 0;
   width: 100%;
-  z-index: 1; }
+  z-index: 3; }
 
 .banner {
   height: 100vh;
@@ -193,7 +193,8 @@ footer {
   justify-content: center;
   position: fixed;
   right: 3rem;
-  width: 8rem; }
+  width: 8rem;
+  z-index: 2; }
   .btn-suspendido:hover {
     background-color: white; }
     .btn-suspendido:hover svg {
@@ -214,22 +215,40 @@ footer {
   margin-top: 8rem;
   overflow: hidden;
   width: 30rem; }
+  .card .descripcion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40%;
+    border-top-style: solid;
+    background-color: white;
+    z-index: 1;
+    padding: 1rem; }
+    .card .descripcion p {
+      text-align: center; }
+    .card .descripcion .agregarCarrito {
+      background-color: #bda075;
+      border-radius: 50px;
+      height: 5rem;
+      font-size: 3em;
+      font-family: "Amatic SC", cursive; }
+      .card .descripcion .agregarCarrito:hover {
+        box-shadow: 0px 0px 15px 0px; }
   .card img {
     height: 100%;
     width: 100%;
     object-fit: cover;
     position: relative; }
-  .card p {
+  .card .textoAparece {
     left: 50%;
     top: 50%;
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
     opacity: 0; }
   .card:hover {
     transform: scale(1.1);
     transition: 0.5s; }
     .card:hover img {
-      transform: scale(1.2);
       transition: transform .5s, filter .5s ease-in-out;
       filter: opacity(30%); }
     .card:hover > p {
@@ -239,35 +258,86 @@ footer {
       animation-duration: 1.5s;
       animation-name: deslizar; }
 
-form {
+.filtrado {
+  display: flex;
+  align-items: center;
+  margin-right: 5%; }
+
+.alineacionFiltro {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap; }
+  .alineacionFiltro .miCarrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 5%;
+    min-width: 2rem;
+    width: 20rem;
+    border-radius: 50px;
+    padding: 1rem;
+    background-color: #f19ccc;
+    border-style: solid; }
+    .alineacionFiltro .miCarrito #abrirModal {
+      width: 1.8rem;
+      height: 1.8rem;
+      fill: black;
+      margin-right: 1rem;
+      transition: 0.3s ease-in-out; }
+    .alineacionFiltro .miCarrito p {
+      margin-bottom: 0px; }
+    .alineacionFiltro .miCarrito:hover {
+      cursor: pointer;
+      box-shadow: 0px 0px 55px 0px;
+      background-color: #F7F0CA; }
+      .alineacionFiltro .miCarrito:hover p {
+        color: #f19ccc; }
+      .alineacionFiltro .miCarrito:hover #abrirModal {
+        fill: #f19ccc;
+        transform: scale(8); }
+
+.textField {
+  width: 20rem;
+  border-radius: 50px;
+  padding: 1rem;
+  background-color: #bda075;
+  border-style: solid; }
+
+.filtro {
+  background-color: transparent;
+  border-color: transparent;
+  outline: none; }
+
+form, .formulario {
   margin-top: 8rem;
   font-size: 2rem;
   margin-bottom: 8rem; }
-  form .flexForm {
+  form .flexForm, .formulario .flexForm {
     display: flex;
     align-items: center; }
-    form .flexForm input {
+    form .flexForm input, .formulario .flexForm input {
       width: 100%; }
-  form svg {
+  form svg, .formulario svg {
     height: 100%;
     width: 5rem;
     margin-right: 2rem; }
-  form label {
+  form label, .formulario label {
     margin-right: 2rem; }
-  form select, form .flexForm input {
+  form select, form .flexForm input, form .formulario .flexForm input, .formulario .flexForm form input, .formulario select, form .flexForm .formulario input, .formulario .flexForm input {
     font-size: 2rem;
     height: 5rem;
     margin: 1rem 0rem;
     padding: 1rem; }
-  form textarea {
+  form textarea, .formulario textarea {
     width: 100%;
     font-size: 2rem;
     margin: 1rem 0rem;
     padding: 1rem; }
-  form .submit {
+  form .submit, .formulario .submit {
     margin: 0;
     background-color: #bda075; }
-  form .centrarBoton {
+  form .centrarBoton, .formulario .centrarBoton {
     text-align: center; }
 
 article {
@@ -578,3 +648,75 @@ article {
     max-height: 40rem;
     margin-left: 2rem;
     border-radius: 10px; } }
+
+#modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  width: 80vw;
+  background-color: #F7F0CA;
+  border-width: thin; }
+  #modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.55); }
+  #modal .tituloModal {
+    font-family: "Honey Butter";
+    font-size: 6rem;
+    text-align: center;
+    background-color: #f19ccc;
+    border-bottom-style: solid;
+    border-width: thin;
+    box-shadow: 0px 5px 30px #000000;
+    margin-bottom: 4rem; }
+  #modal .productosAgregados {
+    padding: 3rem;
+    min-height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    #modal .productosAgregados .texto {
+      text-align: center; }
+    #modal .productosAgregados .formulario {
+      display: flex;
+      flex-direction: column; }
+  #modal .fila {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem; }
+    #modal .fila p {
+      flex: 2;
+      text-align: center;
+      margin-bottom: 0; }
+    #modal .fila .precio {
+      font-size: 2rem;
+      text-align: center;
+      flex: 1; }
+    #modal .fila .eliminar {
+      flex: 1;
+      background-color: red;
+      border-radius: 50px;
+      height: 5rem;
+      font-size: 1.3rem;
+      padding: 0 1rem;
+      font-family: "Montserrat Regular", sans-serif;
+      margin-left: 2rem; }
+      #modal .fila .eliminar:hover {
+        box-shadow: 0px 0px 15px 0px; }
+  #modal .botonesModal {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 2rem;
+    margin: 3rem 0px 2rem 0px; }
+    #modal .botonesModal .btnModal {
+      margin-right: 2rem;
+      background-color: #bda075;
+      border-radius: 50px;
+      height: 5rem;
+      font-size: 3em;
+      font-family: "Amatic SC", cursive;
+      padding: 0 2rem; }
+      #modal .botonesModal .btnModal:hover {
+        box-shadow: 0px 0px 15px 0px; }
