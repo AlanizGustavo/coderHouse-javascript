@@ -289,22 +289,24 @@ const cargarFormulario = () => {
             if(seleccionado === 'Si'){
                 inputDomicilio = document.querySelector('.inputDomicilio');
                 if(expresiones.domicilio.test(inputDomicilio.value)){
-                    compraExitosa();
+                    console.log(inputNombre.value)
+                    compraExitosa(inputNombre.value);
                 }
                 
             }else{
-                compraExitosa();
+                compraExitosa(inputNombre.value);
             }
         }
     })
 }
 
-const compraExitosa = () => {
+const compraExitosa = (nombre) => {
     popup.close();
     listaAgregados.innerHTML = '';
     sessionStorage.clear();
+    carrito = [];
     Swal.fire({
-        title: 'Ha realizado su compra de manera exitosa',
+        title: `${nombre} has realizado tu compra de manera exitosa`,
         text: 'Que disfrutes tu pedido',
         icon: 'success',
         returnFocus: true,
