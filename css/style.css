@@ -430,6 +430,11 @@ article {
     .grid .card {
       width: 20rem;
       height: 30rem; }
+      .grid .card .descripcion p {
+        font-size: 1rem; }
+      .grid .card .descripcion .agregarCarrito {
+        font-size: 2em;
+        height: 3rem; }
   footer nav {
     justify-content: center; }
     footer nav ul {
