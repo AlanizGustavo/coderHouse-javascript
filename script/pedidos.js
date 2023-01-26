@@ -54,7 +54,7 @@ class Producto {
     
 }
 
-
+// CARGA INICIAL DE LAS CARDS Y CREACION DE LAS INSTANCIAS DE PRODUCTO
 let cargaInicial = async () => {
     if(productos.length===0){
         const requestInicial = await fetch(`../productos.json`);
@@ -70,6 +70,7 @@ let cargaInicial = async () => {
     })
 }
 
+//FUNCION PARA RENDERIZAR LA CARD EN CASO DE NO HABER COINCIDENCIA CON LO INGRESADO EN EL FILTRO
 let agregarCardNoEncontrado = function(element){
         
     const card = document.createElement("div");
@@ -171,6 +172,7 @@ modalAbrir.addEventListener('click', () => {
     }
 })
 
+//FUNCION PARA MOSTRAR EL INPUT PARA INGRESAR EL DOMICILIO EN CASO DE QUE EL INPUT RADIO 'Si' ESTE SELECCIONADO
 const cargaEventoInput = () => {
     let radioBtns = document.querySelectorAll("input[name='domicilio']")
     inputDomicilio = document.querySelector('.inputDomicilio');
@@ -195,7 +197,7 @@ modalCerrar.addEventListener('click', () => {
 })
 
 
-
+//FUNCION QUE RENDERIZA CADA FILA DE PRODUCTOS DENTRO DEL MODAL 
 const agregarItemCompras = function(element){
         
     const fila = document.createElement("div");
@@ -208,6 +210,7 @@ const agregarItemCompras = function(element){
     listaAgregados.appendChild(fila);
 }
 
+//FUNCION QUE DA FUNCIONALIDAD A LOS BOTONES ELIMINAR DENTRO DEL MODAL DE COMPRA
 const agregarEventoEliminar = () => {
     for (const boton of botonesEliminarAll) {
         boton.addEventListener('click', () => {
@@ -243,6 +246,7 @@ const agregarEventoEliminar = () => {
     }
 }
 
+//EXPRESIONES REGULARES PARA REALIZAR VALIDACIONES AL MOMENTO DE LA COMPRA.
 const expresiones = {
 	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     fecha: /^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
@@ -274,9 +278,11 @@ const cargarFormulario = () => {
         </form>
         `;
     listaAgregados.appendChild(formulario);
+
     const inputNombre = document.getElementById('nombreApellido');
     const inputFecha = document.getElementById('fecha')
     const comprar = document.querySelector('#comprar')
+
     comprar.addEventListener('click', (e) => {
         if(expresiones.nombre.test(inputNombre.value) && expresiones.fecha.test(inputFecha.value)){
             let seleccionado = document.querySelector("input[name='domicilio']:checked").value
