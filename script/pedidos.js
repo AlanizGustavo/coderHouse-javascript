@@ -1,102 +1,76 @@
 const grid = document.querySelector('.grid');
 const producto = document.querySelector('#nombre');
 
-let btnCarritos;
+const productos = [];
+
+let btnCarrito;
 
 
 let filtroNombre;
 let carrito = [];
 
-const productos = [
-    {
-        id: 1,
-        nombre: 'Drip cake en tonos celestes',
-        imagen: '../assets/img/drip_cake_celestes.JPG',
-        texto: 'Drip cake en tonos celestes. Rellenos de ganache de frutos rojos y dulce de leche',
-        precio: 5000
-    },
-    {
-        id: 2,
-        nombre: 'Drip cake en tonos grises',
-        imagen: '../assets/img/drip_cake_negro.JPG',
-        texto: 'Drip Cake rellena de ganache de maracuya y dulce de leche',
-        precio: 4500
-    },
-    {
-        id: 3,
-        nombre: 'Torta de casamiento',
-        imagen: '../assets/img/torta_casamiento.JPG',
-        texto: 'Torta de casamiento para 80 personas. Torta superior de dos rellenos y biscochuelo de limon. Torta inferior de 3 rellenos con biscochuelo de chocolate',
-        precio: 9000
-    },
-    {
-        id: 4,
-        nombre: 'Torta decorada con petalos de rosa',
-        imagen: '../assets/img/drip_cake_petalos.JPG',
-        texto: 'Torta de vainilla con rellenos de crema con frutos rojos y ganache de chocolate',
-        precio: 5000
-    },
-    {
-        id: 5,
-        nombre: 'Desayuno Completo',
-        imagen: '../assets/img/desayuno.JPG',
-        texto: 'Desayuno completo con cheesecake de maracuya, carrot cake, tarta de frutillas, mini budines, conitos de dulce de leche, macarons, marquise, alfajores de maicena y de almendra',
-        precio: 4500
-    },
-    {
-        id: 6,
-        nombre: 'Torta decorada con flores',
-        imagen: '../assets/img/cake_flowers.JPG',
-        texto: 'Drip cake decorada con flores de estacion. Bizcochuelo de vainilla y rellenos de dulce de leche y crema con frutillas',
-        precio: 6000
-    },
-    {
-        id: 7,
-        nombre: 'Torta brownie, con dulce de leche y merengue',
-        imagen: '../assets/img/brownie_cake.JPG',
-        texto: 'Bomba de la casa!!! Torta brwnie con dulce de leche, crema y merengue',
-        precio: 3800
-    },
-    {
-        id: 8,
-        nombre: 'Frambuesas bañadas en chocolate blanco y negro',
-        imagen: '../assets/img/frambuesas_chocolate.JPG',
-        texto: 'Frambuesas bañadas en chocolate blanco y luego en chocolate negro',
-        precio: 630
-    },
-    {
-        id: 9,
-        nombre: 'Torta con forma de letra',
-        imagen: '../assets/img/letter_cake.JPG',
-        texto: 'Letter cake. Puede ser de la letra que gustes. Masa sable con dulce de leche y toppings',
-        precio: 4000
-    },
-    {
-        id: 10,
-        nombre: 'Cheseecake de frutos rojos',
-        imagen: '../assets/img/cheesecake.JPG',
-        texto: 'Cheesecake de frutos rojos. Puede ser de maracuya o chocolate blanco y nutella',
-        precio: 4500
-    },
-    {
-        id: 11,
-        nombre: 'Torta con colores de Boca Juniors',
-        imagen: '../assets/img/torta_boca.JPG',
-        texto: 'Torta de chocolate, rellena con ganache de frutos rojos y ganache de maracuya',
-        precio: 7000
+class Producto {
+    constructor(id, nombre, imagen, texto, precio){
+        this.id = id;
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.texto = texto;
+        this.precio = precio;  
     }
-]
+    
+    render() {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+            <img src="${this.imagen}" alt="${this.nombre}">
+            <p class="texto textoAparece">${this.texto}</p>
+            <div class="descripcion">
+                <p class="texto">${this.nombre}</p>
+                <p class="texto">$${this.precio}</p>
+                <button id="${this.id}" class="agregarCarrito" type="button">Agregar al carrito</button>
+            </div>
+            `;
+        grid.appendChild(card);
+    }
 
-let cargaInicial = () => {
-
-    productos.forEach( element => {
-        agregarCards(element);
-    }),
-    funcionalidadBtn();
+    funcionalidadBtn(){
+        btnCarrito = document.getElementById(`${this.id}`);
+        btnCarrito.addEventListener('click', () => {
+            carrito.push(this);
+            sessionStorage.setItem('carrito', JSON.stringify(carrito));
+            Toastify({
+                text: "Producto agregado al carrito",
+                duration: 3000,
+                newWindow: true,
+                close: false,
+                gravity: "bottom", 
+                position: "center", 
+                style: {
+                    background: "#f19ccc",
+                },
+            }).showToast();
+        })
+    }
+    
 }
+
+
+let cargaInicial = async () => {
+    if(productos.length===0){
+        const requestInicial = await fetch(`../productos.json`);
+        const prodJSON = await requestInicial.json();
+        prodJSON.forEach( element => {
+            productos.push(new Producto(element.id, element.nombre, element.imagen, element.texto, element.precio));
+        })   
+    }
     
-    
-let agregarCards = function(element){
+    productos.forEach( producto => {
+        producto.render()
+        producto.funcionalidadBtn();
+    })
+}
+
+let agregarCardNoEncontrado = function(element){
         
     const card = document.createElement("div");
     card.classList.add("card");
@@ -110,7 +84,6 @@ let agregarCards = function(element){
         `;
     grid.appendChild(card);
 }
-
 
 //Funcion para filtrar los productos
 const filtrar = () => {
@@ -127,11 +100,10 @@ const filtrar = () => {
     else{
         grid.innerHTML="";
 
-        
         if(productosFiltrados.length > 0){
             productosFiltrados.forEach(element => {
-                agregarCards(element);
-                funcionalidadBtn();
+                element.render();
+                element.funcionalidadBtn();
             })
         }
         else{
@@ -141,37 +113,15 @@ const filtrar = () => {
                 texto: "No se encontro coicidencia"
             };
             grid.innerHTML="";
-            agregarCards(noEncontrado);
-            grid.innerHTML="";
-            agregarCards(noEncontrado);
+            agregarCardNoEncontrado(noEncontrado);
         }
     }
     
 }  
 
 
-/*
-*Funcion que capta todos los botones "Agregar carrito" y les asigna una accion al hacer click
-*
-*/
-const funcionalidadBtn = () => {
-    btnCarritos = document.querySelectorAll('.agregarCarrito');
 
-    for (const boton of btnCarritos) {
-        boton.addEventListener('click', () => {
-            carrito.push(productos.find( elemento => {
-                return elemento.id == boton.id;
-            }))
-            sessionStorage.setItem('carrito', JSON.stringify(carrito));
-        })
-    }
-
-}
-
-
-
-
-nombre.addEventListener("keydown", filtrar);
+nombre.addEventListener("keyup", filtrar);
 
 cargaInicial();
 
@@ -185,7 +135,7 @@ const modalAbrir = document.querySelector('.miCarrito')
 const modalCerrar = document.querySelector('#cerrarModal')
 const listaAgregados = document.querySelector('.productosAgregados');
 const formulario = document.querySelector('.formulario');
-const comprar = document.querySelector('#comprar')
+
 let inputRadio;
 let radioSi;
 
@@ -222,12 +172,13 @@ modalAbrir.addEventListener('click', () => {
 })
 
 const cargaEventoInput = () => {
-    radioBtns = document.querySelectorAll("input[name='domicilio']")
+    let radioBtns = document.querySelectorAll("input[name='domicilio']")
     inputDomicilio = document.querySelector('.inputDomicilio');
     radioBtns.forEach( radio => {
         radio.addEventListener('change', () => {
             let seleccionado = document.querySelector("input[name='domicilio']:checked")
             let valor=seleccionado.value;
+            
             if(valor==="Si"){
                 inputDomicilio.classList.toggle('show')
             }
@@ -292,6 +243,12 @@ const agregarEventoEliminar = () => {
     }
 }
 
+const expresiones = {
+	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    fecha: /^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
+    domicilio: /^[a-zA-Z0-9]{4,16}$/, // Letras, numeros
+}
+
 const cargarFormulario = () => {
     const formulario = document.createElement("div");
     formulario.classList.add("formulario");
@@ -305,26 +262,51 @@ const cargarFormulario = () => {
                     <input type="radio" placeholder="Si" name="domicilio" id="domicilioSi" class="radioSi" value="Si" required="required">
                 </label>
                 <label for="domicilioNo">No
-                    <input type="radio" placeholder="No" name="domicilio" id="domicilioNo" class="radioNo" value="No" required="required">
+                    <input type="radio" placeholder="No" name="domicilio" id="domicilioNo" class="radioNo" value="No" required="required" checked>
                 </label>    
             </div>
             <input type="text" placeholder="Domicilio" name="inputDomicilio" id="inputDomicilio" class="inputDomicilio" required="required">
             <label for="fecha">Fecha de Entrega:</label>
             <input type="date" placeholder="Fecha de Entrega" name="fecha" id="fecha" class="fecha" min="${hoy}" required="required">
-            <button type="submit">enviar</button>
+            <div class="centrarBtn">
+                <button id="comprar" type="submit">Comprar</button>
+            </div>    
         </form>
         `;
     listaAgregados.appendChild(formulario);
+    const inputNombre = document.getElementById('nombreApellido');
+    const inputFecha = document.getElementById('fecha')
+    const comprar = document.querySelector('#comprar')
+    comprar.addEventListener('click', (e) => {
+        if(expresiones.nombre.test(inputNombre.value) && expresiones.fecha.test(inputFecha.value)){
+            let seleccionado = document.querySelector("input[name='domicilio']:checked").value
+            if(seleccionado === 'Si'){
+                inputDomicilio = document.querySelector('.inputDomicilio');
+                if(expresiones.domicilio.test(inputDomicilio.value)){
+                    compraExitosa();
+                }
+                
+            }else{
+                compraExitosa();
+            }
+        }
+    })
 }
 
-comprar.addEventListener('click', () => {
-    const comprado = document.createElement("div");
-    comprado.classList.add("comprado");
-    comprado.innerHTML = `
-        <p class="texto">Ha realizado su compra de manera exitosa</p>
-        `;
-    listaAgregados.appendChild(comprado);
-})
+const compraExitosa = () => {
+    popup.close();
+    listaAgregados.innerHTML = '';
+    sessionStorage.clear();
+    Swal.fire({
+        title: 'Ha realizado su compra de manera exitosa',
+        text: 'Que disfrutes tu pedido',
+        icon: 'success',
+        returnFocus: true,
+        backdrop: true,
+        confirmButtonText: 'OK'
+    })
+}
+
 
 
 const calcularTotal = () => {

@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "nombre": "Drip cake en tonos celestes",
+        "imagen": "../assets/img/drip_cake_celestes.JPG",
+        "texto": "Drip cake en tonos celestes. Rellenos de ganache de frutos rojos y dulce de leche",
+        "precio": 5000
+    },
+    {
+        "id": 2,
+        "nombre": "Drip cake en tonos grises",
+        "imagen": "../assets/img/drip_cake_negro.JPG",
+        "texto": "Drip Cake rellena de ganache de maracuya y dulce de leche",
+        "precio": 4500
+    },
+    {
+        "id": 3,
+        "nombre": "Torta de casamiento",
+        "imagen": "../assets/img/torta_casamiento.JPG",
+        "texto": "Torta de casamiento para 80 personas. Torta superior de dos rellenos y biscochuelo de limon. Torta inferior de 3 rellenos con biscochuelo de chocolate",
+        "precio": 9000
+    },
+    {
+        "id": 4,
+        "nombre": "Torta decorada con petalos de rosa",
+        "imagen": "../assets/img/drip_cake_petalos.JPG",
+        "texto": "Torta de vainilla con rellenos de crema con frutos rojos y ganache de chocolate",
+        "precio": 5000
+    },
+    {
+        "id": 5,
+        "nombre": "Desayuno Completo",
+        "imagen": "../assets/img/desayuno.JPG",
+        "texto": "Desayuno completo con cheesecake de maracuya, carrot cake, tarta de frutillas, mini budines, conitos de dulce de leche, macarons, marquise, alfajores de maicena y de almendra",
+        "precio": 4500
+    },
+    {
+        "id": 6,
+        "nombre": "Torta decorada con flores",
+        "imagen": "../assets/img/cake_flowers.JPG",
+        "texto": "Drip cake decorada con flores de estacion. Bizcochuelo de vainilla y rellenos de dulce de leche y crema con frutillas",
+        "precio": 6000
+    },
+    {
+        "id": 7,
+        "nombre": "Torta brownie, con dulce de leche y merengue",
+        "imagen": "../assets/img/brownie_cake.JPG",
+        "texto": "Bomba de la casa!!! Torta brwnie con dulce de leche, crema y merengue",
+        "precio": 3800
+    },
+    {
+        "id": 8,
+        "nombre": "Frambuesas bañadas en chocolate blanco y negro",
+        "imagen": "../assets/img/frambuesas_chocolate.JPG",
+        "texto": "Frambuesas bañadas en chocolate blanco y luego en chocolate negro",
+        "precio": 630
+    },
+    {
+        "id": 9,
+        "nombre": "Torta con forma de letra",
+        "imagen": "../assets/img/letter_cake.JPG",
+        "texto": "Letter cake. Puede ser de la letra que gustes. Masa sable con dulce de leche y toppings",
+        "precio": 4000
+    },
+    {
+        "id": 10,
+        "nombre": "Cheseecake de frutos rojos",
+        "imagen": "../assets/img/cheesecake.JPG",
+        "texto": "Cheesecake de frutos rojos. Puede ser de maracuya o chocolate blanco y nutella",
+        "precio": 4500
+    },
+    {
+        "id": 11,
+        "nombre": "Torta con colores de Boca Juniors",
+        "imagen": "../assets/img/torta_boca.JPG",
+        "texto": "Torta de chocolate, rellena con ganache de frutos rojos y ganache de maracuya",
+        "precio": 7000
+    }
+]
