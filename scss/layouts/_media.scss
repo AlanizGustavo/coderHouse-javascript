@@ -25,6 +25,15 @@
         .card{
             width: 20rem;
             height: 30rem;
+            .descripcion{
+                p{
+                    font-size: 1rem;
+                }
+                .agregarCarrito{
+                    font-size: 2em;
+                    height: 3rem;
+                }
+            }
         }
     }
     footer nav {
