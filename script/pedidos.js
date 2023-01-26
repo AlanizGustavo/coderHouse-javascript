@@ -1,40 +1,76 @@
 const grid = document.querySelector('.grid');
 const producto = document.querySelector('#nombre');
 
-let btnCarritos;
+const productos = [];
+
+let btnCarrito;
 
 
 let filtroNombre;
 let carrito = [];
 
 class Producto {
-    constructor(id, imagen, texto, precio){
+    constructor(id, nombre, imagen, texto, precio){
         this.id = id;
+        this.nombre = nombre;
         this.imagen = imagen;
         this.texto = texto;
         this.precio = precio;  
     }
     
-    render(params) {
-                
+    render() {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.innerHTML = `
+            <img src="${this.imagen}" alt="${this.nombre}">
+            <p class="texto textoAparece">${this.texto}</p>
+            <div class="descripcion">
+                <p class="texto">${this.nombre}</p>
+                <p class="texto">$${this.precio}</p>
+                <button id="${this.id}" class="agregarCarrito" type="button">Agregar al carrito</button>
+            </div>
+            `;
+        grid.appendChild(card);
     }
+
+    funcionalidadBtn(){
+        btnCarrito = document.getElementById(`${this.id}`);
+        btnCarrito.addEventListener('click', () => {
+            carrito.push(this);
+            sessionStorage.setItem('carrito', JSON.stringify(carrito));
+            Toastify({
+                text: "Producto agregado al carrito",
+                duration: 3000,
+                newWindow: true,
+                close: false,
+                gravity: "bottom", 
+                position: "center", 
+                style: {
+                    background: "#f19ccc",
+                },
+            }).showToast();
+        })
+    }
+    
 }
 
 
 let cargaInicial = async () => {
-    const requestInicial = await fetch(`../productos.json`);
-
-    const productos = await requestInicial.json();
-
-
-    productos.forEach( element => {
-        agregarCards(element);
-    }),
-    funcionalidadBtn(productos);
+    if(productos.length===0){
+        const requestInicial = await fetch(`../productos.json`);
+        const prodJSON = await requestInicial.json();
+        prodJSON.forEach( element => {
+            productos.push(new Producto(element.id, element.nombre, element.imagen, element.texto, element.precio));
+        })   
+    }
+    
+    productos.forEach( producto => {
+        producto.render()
+        producto.funcionalidadBtn();
+    })
 }
-    
-    
-let agregarCards = function(element){
+
+let agregarCardNoEncontrado = function(element){
         
     const card = document.createElement("div");
     card.classList.add("card");
@@ -43,21 +79,15 @@ let agregarCards = function(element){
         <p class="texto textoAparece">${element.texto}</p>
         <div class="descripcion">
             <p class="texto">${element.nombre}</p>
-            <p class="texto">$${element.precio}</p>
             <button id="${element.id}" class="agregarCarrito" type="button">Agregar al carrito</button>
         </div>
         `;
     grid.appendChild(card);
 }
 
-
 //Funcion para filtrar los productos
-const filtrar = async () => {
+const filtrar = () => {
     filtroNombre = nombre.value.toLowerCase(); //este es un valor tomado de un input
-
-    const requestInicial = await fetch(`../productos.json`);
-
-    const productos = await requestInicial.json();
 
     const productosFiltrados = productos.filter(producto => {
         return producto.nombre.toLowerCase().includes(filtroNombre);
@@ -70,11 +100,10 @@ const filtrar = async () => {
     else{
         grid.innerHTML="";
 
-        
         if(productosFiltrados.length > 0){
             productosFiltrados.forEach(element => {
-                agregarCards(element);
-                funcionalidadBtn(productosFiltrados);
+                element.render();
+                element.funcionalidadBtn();
             })
         }
         else{
@@ -84,37 +113,15 @@ const filtrar = async () => {
                 texto: "No se encontro coicidencia"
             };
             grid.innerHTML="";
-            agregarCards(noEncontrado);
-            grid.innerHTML="";
-            agregarCards(noEncontrado);
+            agregarCardNoEncontrado(noEncontrado);
         }
     }
     
 }  
 
 
-/*
-*Funcion que capta todos los botones "Agregar carrito" y les asigna una accion al hacer click
-*
-*/
-const funcionalidadBtn = (productos) => {
-    btnCarritos = document.querySelectorAll('.agregarCarrito');
 
-    for (const boton of btnCarritos) {
-        boton.addEventListener('click', () => {
-            carrito.push(productos.find( elemento => {
-                return elemento.id == boton.id;
-            }))
-            sessionStorage.setItem('carrito', JSON.stringify(carrito));
-        })
-    }
-
-}
-
-
-
-
-nombre.addEventListener("keydown", filtrar);
+nombre.addEventListener("keyup", filtrar);
 
 cargaInicial();
 
@@ -128,7 +135,7 @@ const modalAbrir = document.querySelector('.miCarrito')
 const modalCerrar = document.querySelector('#cerrarModal')
 const listaAgregados = document.querySelector('.productosAgregados');
 const formulario = document.querySelector('.formulario');
-const comprar = document.querySelector('#comprar')
+
 let inputRadio;
 let radioSi;
 
@@ -165,12 +172,13 @@ modalAbrir.addEventListener('click', () => {
 })
 
 const cargaEventoInput = () => {
-    radioBtns = document.querySelectorAll("input[name='domicilio']")
+    let radioBtns = document.querySelectorAll("input[name='domicilio']")
     inputDomicilio = document.querySelector('.inputDomicilio');
     radioBtns.forEach( radio => {
         radio.addEventListener('change', () => {
             let seleccionado = document.querySelector("input[name='domicilio']:checked")
             let valor=seleccionado.value;
+            
             if(valor==="Si"){
                 inputDomicilio.classList.toggle('show')
             }
@@ -235,6 +243,12 @@ const agregarEventoEliminar = () => {
     }
 }
 
+const expresiones = {
+	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    fecha: /^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
+    domicilio: /^[a-zA-Z0-9]{4,16}$/, // Letras, numeros
+}
+
 const cargarFormulario = () => {
     const formulario = document.createElement("div");
     formulario.classList.add("formulario");
@@ -248,26 +262,51 @@ const cargarFormulario = () => {
                     <input type="radio" placeholder="Si" name="domicilio" id="domicilioSi" class="radioSi" value="Si" required="required">
                 </label>
                 <label for="domicilioNo">No
-                    <input type="radio" placeholder="No" name="domicilio" id="domicilioNo" class="radioNo" value="No" required="required">
+                    <input type="radio" placeholder="No" name="domicilio" id="domicilioNo" class="radioNo" value="No" required="required" checked>
                 </label>    
             </div>
             <input type="text" placeholder="Domicilio" name="inputDomicilio" id="inputDomicilio" class="inputDomicilio" required="required">
             <label for="fecha">Fecha de Entrega:</label>
             <input type="date" placeholder="Fecha de Entrega" name="fecha" id="fecha" class="fecha" min="${hoy}" required="required">
-            <button type="submit">enviar</button>
+            <div class="centrarBtn">
+                <button id="comprar" type="submit">Comprar</button>
+            </div>    
         </form>
         `;
     listaAgregados.appendChild(formulario);
+    const inputNombre = document.getElementById('nombreApellido');
+    const inputFecha = document.getElementById('fecha')
+    const comprar = document.querySelector('#comprar')
+    comprar.addEventListener('click', (e) => {
+        if(expresiones.nombre.test(inputNombre.value) && expresiones.fecha.test(inputFecha.value)){
+            let seleccionado = document.querySelector("input[name='domicilio']:checked").value
+            if(seleccionado === 'Si'){
+                inputDomicilio = document.querySelector('.inputDomicilio');
+                if(expresiones.domicilio.test(inputDomicilio.value)){
+                    compraExitosa();
+                }
+                
+            }else{
+                compraExitosa();
+            }
+        }
+    })
 }
 
-comprar.addEventListener('click', () => {
-    const comprado = document.createElement("div");
-    comprado.classList.add("comprado");
-    comprado.innerHTML = `
-        <p class="texto">Ha realizado su compra de manera exitosa</p>
-        `;
-    listaAgregados.appendChild(comprado);
-})
+const compraExitosa = () => {
+    popup.close();
+    listaAgregados.innerHTML = '';
+    sessionStorage.clear();
+    Swal.fire({
+        title: 'Ha realizado su compra de manera exitosa',
+        text: 'Que disfrutes tu pedido',
+        icon: 'success',
+        returnFocus: true,
+        backdrop: true,
+        confirmButtonText: 'OK'
+    })
+}
+
 
 
 const calcularTotal = () => {

@@ -238,7 +238,8 @@ footer {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    position: relative; }
+    position: relative;
+    max-height: 65%; }
   .card .textoAparece {
     left: 50%;
     top: 50%;
@@ -681,6 +682,20 @@ article {
       display: flex;
       flex-direction: column;
       margin: 3rem 0rem; }
+      #modal .productosAgregados .formulario .centrarBtn {
+        display: flex;
+        justify-content: center; }
+        #modal .productosAgregados .formulario .centrarBtn button {
+          align-items: center;
+          margin-right: 2rem;
+          background-color: #f19ccc;
+          border-radius: 50px;
+          height: 5rem;
+          font-size: 3rem;
+          font-family: "Amatic SC", cursive;
+          padding: 0 2rem; }
+          #modal .productosAgregados .formulario .centrarBtn button:hover {
+            box-shadow: 0px 0px 15px 0px; }
   #modal .fila {
     display: flex;
     justify-content: center;
